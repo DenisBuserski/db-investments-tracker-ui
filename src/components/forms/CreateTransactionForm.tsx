@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const CreateDepositForm = () => {
+const CreateTransactionForm = () => {
     const [form, setForm] = useState({
         date: "",
         amount: "",
@@ -14,9 +14,9 @@ const CreateDepositForm = () => {
 
     const handleChange =
         (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-        setErrors({ ...errors, [e.target.name]: "" });
-    };
+            setForm({ ...form, [e.target.name]: e.target.value });
+            setErrors({ ...errors, [e.target.name]: "" });
+        };
 
     const validate = () => {
         const newErrors: { [key: string]: string } = {};
@@ -56,10 +56,10 @@ const CreateDepositForm = () => {
 
     return (
         <form onSubmit={handleSubmit} style={{ maxWidth: 500 }}>
-            <h2>Create Deposit</h2>
+            <h2>Create Transaction</h2>
 
             <div className="mb-3">
-                <label htmlFor="date" className="form-label">Deposit Date</label>
+                <label htmlFor="date" className="form-label">Date</label>
                 <input
                     type="date"
                     id="date"
@@ -97,7 +97,6 @@ const CreateDepositForm = () => {
                     <option value="">Select currency</option>
                     <option value="EUR">EUR</option>
                     <option value="USD">USD</option>
-                    {/* Add more currencies as needed */}
                 </select>
                 {errors.currency && <div className="invalid-feedback">{errors.currency}</div>}
             </div>
@@ -117,11 +116,11 @@ const CreateDepositForm = () => {
                 {errors.description && <div className="invalid-feedback">{errors.description}</div>}
             </div>
 
-            <button type="submit" className="btn btn-primary">Submit Deposit</button>
+            <button type="submit" className="btn btn-primary">Submit</button>
 
             { message && <div className="mt-3 alert alert-info">{message}</div> }
         </form>
     );
 };
 
-export default CreateDepositForm;
+export default CreateTransactionForm;
