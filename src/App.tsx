@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import logo from './logo.svg';
-// import './App.css';
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import SideBar from "../../db-investments-tracker-ui/src/components/SideBar";
 import Overview from "../../db-investments-tracker-ui/src/components/Overview";
