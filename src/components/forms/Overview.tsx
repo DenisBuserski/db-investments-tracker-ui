@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CashTransactionChecker from "./CashTransactionChecker";
 import TransactionChecker from "./TransactionChecker";
+import BalanceOverview from "./BalanceOverview";
 
 const Overview = () => {
     const [activeTab, setActiveTab] = useState<string>("home"); // default to home
@@ -12,20 +13,6 @@ const Overview = () => {
                 <button
                     className={`btn btn-outline-primary me-2 mb-2 ${activeTab === "home" ? "active" : ""}`}
                     onClick={() => setActiveTab("home")}>Home</button>
-                {/*
-                Home button must show:
-                Current cash
-                Total deposits till now
-                Total withdrawals till now
-                Total fees till now
-                Total dividends till now
-                Total investments till now
-                Last portfolio value
-                Last Unrealized P/L value
-                Last Unrealized P/L percentage
-                Total sold
-                Realized P/L
-                */}
                 <button
                     className={`btn btn-outline-primary me-2 mb-2 ${activeTab === "portfolioChecker" ? "active" : ""}`}
                     onClick={() => setActiveTab("portfolioChecker")}>Show Portfolio</button>
@@ -38,10 +25,10 @@ const Overview = () => {
                 */}
                 <button
                     className={`btn btn-outline-primary me-2 mb-2 ${activeTab === "cashTransactionsChecker" ? "active" : ""}`}
-                    onClick={() => setActiveTab("cashTransactionsChecker")}>Cash transactions checker</button>
+                    onClick={() => setActiveTab("cashTransactionsChecker")}>Show Cash transactions</button>
                 <button
                     className={`btn btn-outline-primary me-2 mb-2 ${activeTab === "transactionsChecker" ? "active" : ""}`}
-                    onClick={() => setActiveTab("transactionsChecker")}>Transactions checker</button>
+                    onClick={() => setActiveTab("transactionsChecker")}>Show Transactions</button>
                 <button
                     className={`btn btn-outline-primary me-2 mb-2 ${activeTab === "yearOverYear" ? "active" : ""}`}
                     onClick={() => setActiveTab("yearOverYear")}>YoY</button>
@@ -59,16 +46,11 @@ const Overview = () => {
 
                 */}
 
-
-
-
-
-
             </div>
 
             {/* Content Area */}
             <div className="mt-3">
-                {activeTab === "home" && <p>Welcome to your financial dashboard. Select an option above to view more details.</p>}
+                {activeTab === "home" && <BalanceOverview />}
                 {activeTab === "cashTransactionsChecker" && <CashTransactionChecker />}
                 {activeTab === "transactionsChecker" && <TransactionChecker />}
                 {activeTab === "transactions" && <p>Transactions view coming soon...</p>}

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css'
-import SideBar from "../../db-investments-tracker-ui/src/components/SideBar";
-import Overview from "../../db-investments-tracker-ui/src/components/Overview";
-import DepositForm from "./components/forms/DepositForm";
-import WithdrawalForm from "./components/forms/WithdrawalForm";
-import CreateTransactionForm from "./components/forms/CreateTransactionForm";
-import DividendForm from "./components/forms/CreateDividendForm";
+import SideBar from "./components/side/SideBar";
+import Overview from "./components/forms/Overview";
+import DepositForm from "./components/side/DepositForm";
+import WithdrawalForm from "./components/side/WithdrawalForm";
+import CreateTransactionForm from "./components/side/CreateTransactionForm";
+import DividendForm from "./components/side/CreateDividendForm";
 
 
 
