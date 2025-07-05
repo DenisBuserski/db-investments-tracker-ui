@@ -11,3 +11,15 @@
 /*  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',*/
 /*    monospace;*/
 /*}*/
+
+.message-success {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.message-error {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}

@@ -15,7 +15,8 @@ const DepositWithdrawalForm: React.FC<DepositWithdrawalFormProps> = ({ type, onS
     });
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
-    const [message, setMessage] = useState("");
+    const [messageInfo, setMessageInfo] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
+
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -46,19 +47,42 @@ const DepositWithdrawalForm: React.FC<DepositWithdrawalFormProps> = ({ type, onS
             const apiUrl = process.env.REACT_APP_API_BASE_URL;
             const depositsIn = process.env.REACT_APP_API_DEPOSIT_URL;
             const withdrawalsOut = process.env.REACT_APP_API_WITHDRAWAL_URL;
-            console.log(depositsIn);
             const endpoint = type === "deposit" ? `${depositsIn}` : `${withdrawalsOut}`;
+
             await axios.post(`${apiUrl}${endpoint}`, {
                 date: form.date,
                 amount: parseFloat(form.amount),
                 currency: form.currency,
                 description: form.description,
             });
-            setMessage(`${type.charAt(0).toUpperCase() + type.slice(1)} created successfully!`);
+
+            setMessageInfo({ text: `${type.charAt(0).toUpperCase() + type.slice(1)} created successfully!`, type: 'success' });
             setForm({ date: "", amount: "", currency: "", description: "" });
             if(onSubmitSuccess) onSubmitSuccess();
-        } catch (error) {
-            setMessage(`Failed to create ${type}. Please try again.`);
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                const errorData = error.response?.data;
+
+                let backendMessage: string | null = null;
+
+                if (errorData && typeof errorData === 'object') {
+                    if ('message' in errorData && typeof errorData.message === 'string') {
+                        backendMessage = errorData.message;
+                    } else if ('error' in errorData && typeof errorData.error === 'string') {
+                        backendMessage = errorData.error;
+                    }
+                }
+
+                setMessageInfo({
+                    text: `Failed to create ${type}: ${backendMessage ?? 'Unknown error from server'}`,
+                    type: 'error',
+                });
+            } else {
+                setMessageInfo({
+                    text: `Failed to create ${type}. Unexpected error occurred.`,
+                    type: 'error',
+                });
+            }
         }
     };
 
@@ -126,7 +150,11 @@ const DepositWithdrawalForm: React.FC<DepositWithdrawalFormProps> = ({ type, onS
             </div>
 
             <button type="submit" className="btn btn-primary">Submit</button>
-            {message && <div className="mt-3 alert alert-info">{message}</div>}
+            {messageInfo && (
+                <div className={`mt-3 alert ${messageInfo.type === 'success' ? 'alert-success' : 'alert-danger'}`}>
+                    {messageInfo.text}
+                </div>
+            )}
         </form>
     );
 };
