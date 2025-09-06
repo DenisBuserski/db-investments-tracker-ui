@@ -62,25 +62,37 @@ const DepositWithdrawalForm: React.FC<DepositWithdrawalFormProps> = ({ type, onS
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 const errorData = error.response?.data;
-
                 let backendMessage: string | null = null;
 
-                if (errorData && typeof errorData === 'object') {
-                    if ('message' in errorData && typeof errorData.message === 'string') {
+
+                if (errorData && typeof errorData === "object") {
+                    if ("detail" in errorData && typeof errorData.detail === "string") {
+                        // Standard ProblemDetail field
+                        backendMessage = errorData.detail;
+                    } else if ("message" in errorData && typeof errorData.message === "string") {
+                        // Custom error field (your BadRequestException handler)
                         backendMessage = errorData.message;
-                    } else if ('error' in errorData && typeof errorData.error === 'string') {
+                    } else if ("error" in errorData && typeof errorData.error === "string") {
+                        // Fallback for generic "error" property
                         backendMessage = errorData.error;
+                    } else if ("errors" in errorData && Array.isArray(errorData.errors)) {
+                        // Validation handler returns multiple messages
+                        backendMessage = errorData.errors.join(", ");
+                    } else if ("title" in errorData && typeof errorData.title === "string") {
+                        // Fall back to title if nothing else
+                        backendMessage = errorData.title;
                     }
                 }
 
+
                 setMessageInfo({
-                    text: `Failed to create ${type}: ${backendMessage ?? 'Unknown error from server'}`,
-                    type: 'error',
+                    text: `Failed to create ${type}: ${backendMessage ?? "Unknown error from server"}`,
+                    type: "error",
                 });
             } else {
                 setMessageInfo({
                     text: `Failed to create ${type}. Unexpected error occurred.`,
-                    type: 'error',
+                    type: "error",
                 });
             }
         }

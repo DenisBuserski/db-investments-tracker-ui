@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css'
 import SideBar from "./components/side/SideBar";
@@ -8,7 +7,6 @@ import DepositForm from "./components/side/DepositForm";
 import WithdrawalForm from "./components/side/WithdrawalForm";
 import CreateTransactionForm from "./components/side/CreateTransactionForm";
 import DividendForm from "./components/side/CreateDividendForm";
-
 
 
 // Main app component

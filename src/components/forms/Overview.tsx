@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CashTransactionChecker from "./CashTransactionChecker";
 import TransactionChecker from "./TransactionChecker";
 import BalanceOverview from "./BalanceOverview";
+import PortfolioOverview from "./PortfolioOverview";
 
 const Overview = () => {
     const [activeTab, setActiveTab] = useState<string>("home"); // default to home
@@ -9,6 +10,7 @@ const Overview = () => {
     return (
         <div className="container mt-4">
             <h2>Overview</h2>
+
             <div className="mb-4">
                 <button
                     className={`btn btn-outline-primary me-2 mb-2 ${activeTab === "home" ? "active" : ""}`}
@@ -16,13 +18,6 @@ const Overview = () => {
                 <button
                     className={`btn btn-outline-primary me-2 mb-2 ${activeTab === "portfolioChecker" ? "active" : ""}`}
                     onClick={() => setActiveTab("portfolioChecker")}>Show Portfolio</button>
-                {/*
-                Show portfolio:
-                Product
-                Quantity
-                Invested money
-                Dividends received
-                */}
                 <button
                     className={`btn btn-outline-primary me-2 mb-2 ${activeTab === "cashTransactionsChecker" ? "active" : ""}`}
                     onClick={() => setActiveTab("cashTransactionsChecker")}>Show Cash transactions</button>
@@ -51,9 +46,10 @@ const Overview = () => {
             {/* Content Area */}
             <div className="mt-3">
                 {activeTab === "home" && <BalanceOverview />}
+                {activeTab === "portfolioChecker" && <PortfolioOverview />}
                 {activeTab === "cashTransactionsChecker" && <CashTransactionChecker />}
                 {activeTab === "transactionsChecker" && <TransactionChecker />}
-                {activeTab === "transactions" && <p>Transactions view coming soon...</p>}
+                {activeTab === "yearOverYear" && <TransactionChecker />}
             </div>
         </div>
     );
